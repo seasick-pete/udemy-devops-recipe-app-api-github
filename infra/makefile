@@ -11,6 +11,14 @@ tf-setup-validate:
 	docker compose run --rm terraform -chdir=setup validate
 
 .PHONY: _
+tf-setup-plan:
+	docker compose run --rm terraform -chdir=setup plan
+
+.PHONY: _
+tf-setup-apply:
+	docker compose run --rm terraform -chdir=setup apply
+
+.PHONY: _
 tf-deploy-init:
 	docker compose run --rm terraform -chdir=deploy init
 
