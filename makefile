@@ -31,3 +31,11 @@ sh-deploy:
 .PHONY: _
 down-deploy-volumes-orphans:
 	docker compose -f docker-compose-deploy.yml down --volumes --remove-orphans
+
+
+.PHONY: _
+aws-vault-list:
+	aws-vault list
+
+
+
