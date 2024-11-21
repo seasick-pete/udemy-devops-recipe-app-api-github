@@ -18,6 +18,15 @@ tf-setup-plan:
 tf-setup-apply:
 	docker compose run --rm terraform -chdir=setup apply
 
+
+.PHONY: _
+tf-setup-output:
+	docker compose run --rm terraform -chdir=setup output
+
+.PHONY: _
+tf-setup-output-aws-secret:
+	docker compose run --rm terraform -chdir=setup output cd_user_access_key_secret
+
 .PHONY: _
 tf-deploy-init:
 	docker compose run --rm terraform -chdir=deploy init
