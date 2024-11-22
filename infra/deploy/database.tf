@@ -23,6 +23,9 @@ resource "aws_security_group" "rds" {
     protocol  = "tcp"
     from_port = 5432
     to_port   = 5432
+    security_groups = [
+      aws_security_group.ecs_service.id
+    ]
   }
 
   tags = {
@@ -47,7 +50,9 @@ resource "aws_db_instance" "main" {
   backup_retention_period    = 0
   vpc_security_group_ids     = [aws_security_group.rds.id]
 
+
   tags = {
     Name = "${local.prefix}-main"
   }
+
 }
