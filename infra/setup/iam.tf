@@ -365,6 +365,7 @@ data "aws_iam_policy_document" "efs" {
   }
 }
 
+
 resource "aws_iam_policy" "efs" {
   name        = "${aws_iam_user.cd.name}-efs"
   description = "Allow user to manage EFS resources."
@@ -374,4 +375,42 @@ resource "aws_iam_policy" "efs" {
 resource "aws_iam_user_policy_attachment" "efs" {
   user       = aws_iam_user.cd.name
   policy_arn = aws_iam_policy.efs.arn
+}
+
+#############################
+# Policy for Route53 access #
+#############################
+
+data "aws_iam_policy_document" "route53" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "route53:ListHostedZones",
+      "route53:ListHostedZones",
+      "route53:ChangeTagsForResource",
+      "route53:GetHostedZone",
+      "route53:ListTagsForResource",
+      "route53:ChangeResourceRecordSets",
+      "route53:GetChange",
+      "route53:ListResourceRecordSets",
+      "acm:RequestCertificate",
+      "acm:AddTagsToCertificate",
+      "acm:DescribeCertificate",
+      "acm:ListTagsForCertificate",
+      "acm:DeleteCertificate",
+      "acm:CreateCertificate"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "route53" {
+  name        = "${aws_iam_user.cd.name}-route53"
+  description = "Allow user to manage Route53 resources."
+  policy      = data.aws_iam_policy_document.route53.json
+}
+
+resource "aws_iam_user_policy_attachment" "route53" {
+  user       = aws_iam_user.cd.name
+  policy_arn = aws_iam_policy.route53.arn
 }
