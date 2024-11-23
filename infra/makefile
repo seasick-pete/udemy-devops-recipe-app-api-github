@@ -40,5 +40,18 @@ tf-deploy-validate:
 	docker compose run --rm terraform -chdir=deploy validate
 
 .PHONY: _
+tf-state-list:
+	docker compose run --rm terraform -chdir=deploy/ workspace select staging && \
+	docker compose run --rm terraform -chdir=deploy/ state list
+
+
+.PHONY: _
 aws-ecs-exec:
-	todo
+	aws ecs execute-command \
+		--cluster raagh-staging-cluster \
+		--region eu-west-2 \
+		--task df3cf38903c64cbc91f2c967e15d30cc \
+		--container api \
+		--interactive \
+		--command "/bin/sh"
+
