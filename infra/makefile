@@ -38,3 +38,7 @@ tf-deploy-fmt:
 .PHONY: _
 tf-deploy-validate:
 	docker compose run --rm terraform -chdir=deploy validate
+
+.PHONY: _
+aws-ecs-exec:
+	todo
